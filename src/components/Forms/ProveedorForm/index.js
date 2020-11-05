@@ -9,6 +9,7 @@ import { SetUser } from "redux/actions/userActions";
 import { post, get, put } from 'services';
 import InputMask from "react-input-mask";
 import CurrencyInput from 'react-currency-input';
+import validateDominicanId from 'validacion-cedula-dominicana';
 let yup = require('yup');
 
 const marginRightBtn = {
@@ -24,10 +25,10 @@ const ProveedorForm = ({ user, id, action, onHandleChange }) => {
     const [formikSchema, setFormikSchema] = useState({});
     const [basicSchema, setBasicSchema] = useState({
         nombre: yup.string().required("El campo es requerido"),
+        tipoDocumento: yup.string().required("El campo es requerido"),
         documento: yup.string().required("El campo es requerido"),
         tipoPersona: yup.string().required("El campo es requerido"),
         estado: yup.string().required("El campo es requerido"),
-        tipoDocumento: yup.string().required("El campo es requerido"),
         balance: yup.string().required("El campo es requerido"),
     });
     const formRef = useRef();
@@ -71,6 +72,13 @@ const ProveedorForm = ({ user, id, action, onHandleChange }) => {
     });
 
     const onFormSubmitted = async (form) => {
+        if (form.tipoDocumento === 'Cédula') {
+            const cedula = form.documento.replaceAll('-', '');
+            if (!validateDominicanId(cedula)) {
+                alert('Debe ingresar una cédula válida');
+                return;
+            }
+        }
         form = {
             ...form,
             balance: parseFloat(form.balance.replaceAll(',', '')),

@@ -14,10 +14,6 @@ const ProviderModule = (props) => {
   const [action, setAction] = useState('');
   const [id, setId] = useState(0);
 
-  useEffect(() => {
-    
-  }, []);
-
   const onHandleChange = (id, action, detail) => {
     setId(id);
     setAction(action);

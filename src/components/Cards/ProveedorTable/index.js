@@ -23,10 +23,9 @@ const mr = {
     marginRight: 10
 }
 
-
-
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const days = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'];
+const format = 'dd/MM/yyyy';
 const locale = {
     localize: {
         month: n => months[n],
@@ -39,6 +38,7 @@ const ProveedorTable = ({ onHandleChange }) => {
     const [proveedores, setProveedores] = useState([]);
     const [balance, setBalance] = useState('');
     const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
     
     useEffect(() => {
         get('Proveedores').then(response => {
@@ -63,21 +63,20 @@ const ProveedorTable = ({ onHandleChange }) => {
     }
 
     const onFilter = () => {
-        let  data = {}
+        let url = 'Proveedores/filter'
+        let data = {}
 
         if (balance) {
             data = {
                 balance: parseFloat(balance)
             }
         }
-        if (startDate) {
-            data = {
-                ...data,
-                createdAt: startDate
-            }
+
+        if (startDate && endDate) {
+            url = `Proveedores/filter?fechaInicio=${startDate}&fechaFin=${endDate}`
         }
 
-        post('Proveedores/filter', data).then(response => {
+        post(url, data).then(response => {
             setProveedores(response.data.data)
         });
     }
@@ -88,6 +87,7 @@ const ProveedorTable = ({ onHandleChange }) => {
         });
         setBalance('');
         setStartDate();
+        setEndDate();
     }
     
     return (
@@ -107,15 +107,26 @@ const ProveedorTable = ({ onHandleChange }) => {
                     </Form.Group>
 
                     <Form.Group as={Col} md="3" controlId="validationFormik11">
-                        <Form.Label> Fecha </Form.Label>
+                        <Form.Label> Desde </Form.Label>
                         <DatePicker 
                             className="form-control"
                             locale={locale}
+                            dateFormat={format}
                             selected={startDate} onChange={date => setStartDate(date)}
                         />
                     </Form.Group>
 
-                    <Form.Group as={Col} md="6" controlId="validationFormik11">
+                    <Form.Group as={Col} md="3" controlId="validationFormik11">
+                        <Form.Label> Hasta </Form.Label>
+                        <DatePicker 
+                            className="form-control"
+                            locale={locale}
+                            dateFormat={format}
+                            selected={endDate} onChange={date => setEndDate(date)}
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} md="3" controlId="validationFormik11">
                         <div className="display-flex flex-end">
                             <Button style={mr} variant="primary" onClick={onClear}>  <i className="fa fa-broom"></i></Button>
                             <Button style={mtHere} variant="primary" onClick={onFilter}> <i className="fa fa-search"></i></Button>
