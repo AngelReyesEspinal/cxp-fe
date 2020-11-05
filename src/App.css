@@ -1,0 +1,107 @@
+.p-40 {
+  padding: 40px;
+}
+
+
+.p-r-0 {
+  padding-right: 0px;
+}
+.mb-0 {
+  margin-bottom: 0px;
+}
+
+.p-30 {
+  padding: 30px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.padding-10 {
+  padding: 10px;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.flex-center {
+  justify-content: center;
+}
+
+.is-absolute {
+  position: absolute;
+  z-index: 9;
+}
+
+.flex-direction-row {
+  flex-direction: row;
+}
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
+
+.fs-20 {
+  font-size: 20px;
+}
+
+.center-vertical {
+  align-items: center;
+}
+
+.flex-end-vertical {
+  align-items: flex-end;
+}
+
+
+.height-100 {
+  height: 100vh;
+};
+
+.react-datepicker-wrapper {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  width: 100%!important;
+}
+
+.spinner-border {
+  width: 5rem!important;
+  height: 5rem!important;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border .75s linear infinite;
+}
+
+.center-spinner-vertically {
+  top: 50%;
+}
+
+.login-background {
+  background-color:  #0262AB !important;
+}
+
+nav.navbar.navbar-expand.navbar-dark.bg-primary {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+
+.is-password {
+  -webkit-text-security: disc;
+}

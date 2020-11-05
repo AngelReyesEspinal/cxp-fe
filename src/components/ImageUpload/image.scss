@@ -1,0 +1,21 @@
+.upload-photo-image {
+    height: 35px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #0262AB;
+    border-color: #0262AB;
+    width: 180px;
+}
+  
+.upload-photo-image-label {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+#upload-photo {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
