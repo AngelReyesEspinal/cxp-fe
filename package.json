@@ -1,5 +1,6 @@
 {
   "name": "portal-solicitud-empleo",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
