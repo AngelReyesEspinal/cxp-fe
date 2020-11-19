@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ConceptoPagoTable from 'components/Cards/ConceptoPagoTable';
 import ConceptoPagoForm from 'components/Forms/ConceptoPagoForm';
 import ToggleDetail from 'components/ToggleDetail';
@@ -13,10 +13,6 @@ const HomeModule = (props) => {
   const [showDetail, setShowDetail] = useState(true);
   const [action, setAction] = useState('');
   const [id, setId] = useState(0);
-
-  useEffect(() => {
-    
-  }, []);
 
   const onHandleChange = (id, action, detail) => {
     setId(id);

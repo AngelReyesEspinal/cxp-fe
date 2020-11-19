@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DocumentEntryTable from 'components/Cards/DocumentEntryTable';
 import DocumentEntryForm from 'components/Forms/DocumentEntryForm';
 import ToggleDetail from 'components/ToggleDetail';
@@ -13,10 +13,6 @@ const DocumentEntryModule = (props) => {
   const [showDetail, setShowDetail] = useState(true);
   const [action, setAction] = useState('');
   const [id, setId] = useState(0);
-
-  useEffect(() => {
-    
-  }, []);
 
   const onHandleChange = (id, action, detail) => {
     setId(id);
