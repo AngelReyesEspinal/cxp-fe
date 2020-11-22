@@ -3,9 +3,6 @@ import ConceptoPagoTable from 'components/Cards/ConceptoPagoTable';
 import ConceptoPagoForm from 'components/Forms/ConceptoPagoForm';
 import ToggleDetail from 'components/ToggleDetail';
 import { isBrowser } from "react-device-detect";
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { SetUser } from "redux/actions/userActions";
 
 const modulePadding =  isBrowser ? '' : '';
 
@@ -20,9 +17,7 @@ const HomeModule = (props) => {
     setShowDetail(detail);
   }
 
-  return  props.isLoggedIn  
-    ? 
-    (
+  return  (
       <div className={modulePadding}>
         <ToggleDetail onToggleDetail={setShowDetail} label="Conceptos de pago"/>
         { 
@@ -37,19 +32,6 @@ const HomeModule = (props) => {
         }
       </div>
     )
-    : <Redirect to='login'/>
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.isLoggedIn
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    SetUser: (user) => dispatch(SetUser(user))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeModule);
+export default (HomeModule);

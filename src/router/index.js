@@ -6,16 +6,17 @@ import HomeModule from 'views/home';
 import ProviderModule from 'views/provider'
 import DocumentEntryModule from 'views/documentEntry'
 import Accounting from 'views/accounting'
+import PrivateRoute from './PrivateRouteWrapper';
 
 const Router = () => {
     return (
         <Switch>
-            <Route path="/" exact component={HomeModule} />
-            <Route path="/providers" component={ProviderModule} />
-            <Route path="/documentEntryModule" component={DocumentEntryModule} />
+            <PrivateRoute path="/" exact component={HomeModule} />
+            <PrivateRoute path="/providers" component={ProviderModule} />
+            <PrivateRoute path="/documentEntryModule" component={DocumentEntryModule} />
+            <PrivateRoute path="/accounting" component={Accounting} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/accounting" component={Accounting} />
         </Switch>
     )
 };
