@@ -4,24 +4,56 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import { get, post } from 'services';
+import { get, post, put } from 'services';
 import moment from 'moment';
 import GenericFilter from "components/GenericFilter";
+import loading from 'redux/reducers/loadingReducer';
 
 const AccountingTable = () => {
     const [entradasDeDocumento, setEntradasDeDocumento] = useState([]);
     const [displayTable, setDisplayTable] = useState(false);
 
     useEffect(() => {
-        get('EntradasDeDocumento').then(response => {
+        getData()
+    }, []);
+
+    const getData = () => {
+        let url = `EntradasDeDocumento/filter`
+        let data = {
+            idAsiento: null
+        }
+        post(url, data).then(response => {
             setEntradasDeDocumento(response.data.data)
             setDisplayTable(true)
         });
-    }, []);
+    }
+
+    const onCount = async () => {
+        let totalAmount = 0;
+        const currentDate = new Date()
+        entradasDeDocumento.forEach(entradaDocumento => {
+            totalAmount += entradaDocumento.monto
+        });
+        const dto = {
+            descripcion: 'Asiento de CxP correspondiente al periodo '+ currentDate.getFullYear() +'-'+ currentDate.getMonth(),
+            monto:totalAmount,
+            idAuxiliar: 6,
+            DB: 82,
+            CR: 4
+        }
+        console.log(dto)
+        entradasDeDocumento.forEach(async (entradaDocumento) => {
+            entradaDocumento.idAsiento = 1
+            entradaDocumento.estado = 'Pagado'
+            await put('EntradasDeDocumento', entradaDocumento)
+            setDisplayTable(false)
+            getData()
+        })
+    }
     
     return (
         <>
-        <GenericFilter filterByDates={true} endpoint={'EntradasDeDocumento'} setData={setEntradasDeDocumento}/>
+        <GenericFilter filterByIdAsiento={true} filterByDates={true} endpoint={'EntradasDeDocumento'} setData={setEntradasDeDocumento}/>
         <br/>
         <Card>
             <Card.Body className={'p-20'}>
@@ -57,6 +89,11 @@ const AccountingTable = () => {
                         </Table>
                     </Col>
 
+                    <Col xs={12}>
+                        <div className="display-flex flex-end">
+                            <Button  variant="primary" onClick={onCount}>  <i className="fas fa-calculator"></i></Button>
+                        </div>
+                    </Col>
                 </Row>
 
             </Card.Body>

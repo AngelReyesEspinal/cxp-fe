@@ -27,7 +27,7 @@ const locale = {
     formatLong: {}
 };
 
-const GenericFilter = ({ filterByBalance = false, filterByDates = false, endpoint = '', setData }) => {
+const GenericFilter = ({ filterByBalance = false, filterByDates = false, filterByIdAsiento = false, endpoint = '', setData }) => {
     const [balance, setBalance] = useState('');
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
@@ -40,6 +40,13 @@ const GenericFilter = ({ filterByBalance = false, filterByDates = false, endpoin
         if (filterByBalance && balance) {
             data = {
                 balance: parseFloat(balance)
+            }
+        }
+
+        if (filterByIdAsiento) {
+            data = {
+                ...data,
+                idAsiento: null
             }
         }
 
