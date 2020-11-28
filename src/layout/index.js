@@ -97,6 +97,16 @@ class Layout extends React.Component {
                                 <i className="fa fa-file-pdf"></i> Entrada de documentos
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink
+                                to="/accounting"
+                                exact
+                                style={navLinkStyle}
+                                activeStyle={activeNavLinkStyle}
+                            >
+                                <i className="fa fa-coins"></i> Contabilidad
+                            </NavLink>
+                        </li>
                     </ul>
                 </aside>
                 <main className={mainClass.join(" ")}>

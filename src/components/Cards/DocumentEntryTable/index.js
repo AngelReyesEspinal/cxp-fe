@@ -78,7 +78,7 @@ const DocumentEntryTable = ({ onHandleChange }) => {
                                                 <td>{ moment(option.fechaDocumento).format('LL') }</td>
                                                 <td>{option.monto}</td>
                                                 <td>{option.estado}</td>
-                                                <td>{proveedores.find(x => x.id == option.proveedorId).nombre}</td>
+                                                <td>{proveedores.find(x => x.id == option.proveedorId)?.nombre}</td>
                                                 <td>
                                                     <Button variant="danger"  onClick={() => { onHandleDelete(option.id) }}><i className="fa fa-trash-alt"></i></Button>{' '} 
                                                     <Button variant="warning" onClick={() => { onEdit(option.id) }}><i className="fa fa-pencil-alt"></i></Button>
