@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import { get, post, put } from 'services';
+import { get, post, put, contabilidadPost } from 'services';
 import moment from 'moment';
 import GenericFilter from "components/GenericFilter";
 import loading from 'redux/reducers/loadingReducer';
@@ -36,19 +36,33 @@ const AccountingTable = () => {
         });
         const dto = {
             descripcion: 'Asiento de CxP correspondiente al periodo '+ currentDate.getFullYear() +'-'+ currentDate.getMonth(),
-            monto:totalAmount,
-            idAuxiliar: 6,
-            DB: 82,
-            CR: 4
+            idCuentaAuxiliar: 6,
+            inicioPeriodo: '',
+            finPeriodo: '',
+            asientos: [
+                {
+                    idCuenta: 82,
+                    monto: totalAmount
+                },
+                {
+                    idCuenta: 4,
+                    monto: totalAmount
+                }
+            ]
         }
         console.log(dto)
-        entradasDeDocumento.forEach(async (entradaDocumento) => {
-            entradaDocumento.idAsiento = 1
-            entradaDocumento.estado = 'Pagado'
-            await put('EntradasDeDocumento', entradaDocumento)
-            setDisplayTable(false)
-            getData()
-        })
+        const result = await contabilidadPost(dto);
+        console.log('respuesta de contabilidad below:')
+        console.log(result)
+        if (result.data) {
+            entradasDeDocumento.forEach(async (entradaDocumento) => {
+                entradaDocumento.idAsiento = result.data
+                entradaDocumento.estado = 'Pagado'
+                await put('EntradasDeDocumento', entradaDocumento)
+                setDisplayTable(false)
+                getData()
+            })
+        }
     }
     
     return (
