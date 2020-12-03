@@ -11,7 +11,7 @@ const post = async (endpoint, data) => {
 }
 
 const contabilidadPost = async (data) => {
-    return axios.post(`https://plutus.azure-api.net/api/AccountingSeat/InsertAccountingSeats`, data);
+    return axios.post(`/api/AccountingSeat/InsertAccountingSeats`, data);
 }
 
 const put = async (endpoint, data) => {

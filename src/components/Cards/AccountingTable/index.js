@@ -37,8 +37,8 @@ const AccountingTable = () => {
         const dto = {
             descripcion: 'Asiento de CxP correspondiente al periodo '+ currentDate.getFullYear() +'-'+ currentDate.getMonth(),
             idCuentaAuxiliar: 6,
-            inicioPeriodo: '',
-            finPeriodo: '',
+            inicioPeriodo: new Date(),
+            finPeriodo: new Date(),
             asientos: [
                 {
                     idCuenta: 82,
