@@ -14,6 +14,10 @@ const contabilidadPost = async (data) => {
     return axios.post(`/api/AccountingSeat/InsertAccountingSeats`, data);
 }
 
+const corsContabilidadPost = async (data) => {
+    return axios.post(`https://cors-anywhere.herokuapp.com/https://plutus.azure-api.net/api/AccountingSeat/InsertAccountingSeats`, data)
+}
+
 const put = async (endpoint, data) => {
     return axios.put(`${baseURL}/${endpoint}`,  data);
 }
@@ -22,4 +26,4 @@ const onDelete = async (endpoint, id) => {
     return axios.delete(`${baseURL}/${endpoint}/${id}`);
 }
 
-export { get, post, put, onDelete, contabilidadPost };
+export { get, post, put, onDelete, contabilidadPost, corsContabilidadPost };

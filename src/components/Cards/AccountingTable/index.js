@@ -4,12 +4,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import { get, post, put, contabilidadPost } from 'services';
+import { get, post, put, corsContabilidadPost } from 'services';
 import moment from 'moment';
 import GenericFilter from "components/GenericFilter";
 import loading from 'redux/reducers/loadingReducer';
+import { SetLoading } from "redux/actions/loadingActions";
+import { connect } from 'react-redux';
+const Swal = require('sweetalert2');
 
-const AccountingTable = () => {
+const AccountingTable = ({SetLoading}) => {
     const [entradasDeDocumento, setEntradasDeDocumento] = useState([]);
     const [displayTable, setDisplayTable] = useState(false);
 
@@ -29,6 +32,7 @@ const AccountingTable = () => {
     }
 
     const onCount = async () => {
+        //SetLoading(true);
         let totalAmount = 0;
         const currentDate = new Date()
         entradasDeDocumento.forEach(entradaDocumento => {
@@ -39,9 +43,10 @@ const AccountingTable = () => {
             idCuentaAuxiliar: 6,
             inicioPeriodo: new Date(),
             finPeriodo: new Date(),
+            moneda: 'DOP',
             asientos: [
                 {
-                    idCuenta: 82,
+                    idCuenta: 21,
                     monto: totalAmount
                 },
                 {
@@ -50,19 +55,24 @@ const AccountingTable = () => {
                 }
             ]
         }
-        console.log(dto)
-        const result = await contabilidadPost(dto);
-        console.log('respuesta de contabilidad below:')
-        console.log(result)
+        const regex = /(\d+)/g;
+        const result = await corsContabilidadPost(dto);
+        //SetLoading(false);
         if (result.data) {
             entradasDeDocumento.forEach(async (entradaDocumento) => {
-                entradaDocumento.idAsiento = result.data
+                entradaDocumento.idAsiento = Number(result.data.match(regex).join(''))
                 entradaDocumento.estado = 'Pagado'
                 await put('EntradasDeDocumento', entradaDocumento)
                 setDisplayTable(false)
                 getData()
             })
+            Swal.fire(
+                'Muy bien',
+                'Se han actualizado las entradas de documentos con el idAsiento: '+ Number(result.data.match(regex).join('')),
+                'success'
+            )
         }
+        
     }
     
     return (
@@ -91,7 +101,7 @@ const AccountingTable = () => {
                                         return (
                                             <tr key={option.id}>
                                                 <td> 4 </td>
-                                                <td> Cuenta Corriente Banco x  </td> 
+                                                <td> {'Asiento de CxP correspondiente al periodo ' + new Date().getFullYear() +' - '+ new Date().getMonth()}  </td> 
                                                 <td>{ moment(option.fechaDocumento).format('LL') }</td>
                                                 <td>{option.monto}</td>
                                                 <td> NULL </td>
@@ -117,4 +127,12 @@ const AccountingTable = () => {
 };
 
 
-export default AccountingTable;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        SetLoading: (value) => dispatch(SetLoading(value))
+    }
+}
+
+export default connect(
+    null,
+    mapDispatchToProps)(AccountingTable);
