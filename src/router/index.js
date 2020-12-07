@@ -4,7 +4,7 @@ import Login from 'views/login';
 import Register from 'views/register';
 import HomeModule from 'views/home';
 import ProviderModule from 'views/provider'
-import DocumentEntryModule from 'views/documentEntry'
+import DocumentEntryModule from 'views/DocumentEntry/index'
 import Accounting from 'views/accounting'
 import PrivateRoute from './PrivateRouteWrapper';
 
